@@ -55,6 +55,26 @@ func demoMap() {
 	fmt.Println(value, exists)
 }
 
+func handleValue(val int) {
+	val = 0
+}
+
+func handlePointer(ptr *int) {
+	*ptr = 0
+}
+
+// pointer
+func demoPointer() {
+	value := 10
+	fmt.Println("\nvalue:", value)
+	handleValue(value)
+	fmt.Println("after handleValue:", value)
+
+	fmt.Println("pointer:", &value)
+	handlePointer(&value)
+	fmt.Println("after handlePointer:", value)
+}
+
 // time
 func demoTime() {
 	now := time.Now()
@@ -94,6 +114,8 @@ func main() {
 	demoString()
 
 	demoMap()
+
+	demoPointer()
 
 	demoTime()
 
