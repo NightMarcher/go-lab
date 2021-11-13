@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go-lab/pkg"
+	"math"
 	"time"
 )
 
@@ -75,6 +76,59 @@ func demoPointer() {
 	fmt.Println("after handlePointer:", value)
 }
 
+type rect struct {
+	name          string
+	width, height float32
+}
+
+// struct
+func demoStruct() {
+	fmt.Printf("\n%v\n", rect{"rectangle", 2, 3})
+	fmt.Println(rect{name: "square", width: 4, height: 4})
+
+	mine := rect{name: "myRect"}
+	pointerMine := &mine
+	fmt.Println(pointerMine)
+	fmt.Println(pointerMine.width, pointerMine.height)
+	pointerMine.width, pointerMine.height = 5, 6
+	fmt.Println(pointerMine.width, pointerMine.height)
+}
+
+func (r rect) area() float32 {
+	return r.width * r.height
+}
+
+// method
+func demoMethod() {
+	mine := rect{name: "myRect"}
+	fmt.Printf("\n%+v area = %+v\n", mine, mine.area())
+}
+
+type circle struct {
+	name   string
+	radius float32
+}
+
+func (c circle) area() float32 {
+	return math.Pi * c.radius * c.radius
+}
+
+type geometry interface {
+	area() float32
+}
+
+func measure(g geometry) {
+	fmt.Printf("\nmeasuring %+v => area = %+v\n", g, g.area())
+}
+
+// interface
+func demoInterface() {
+	myRect := rect{"myRect", 3, 4}
+	myCircle := circle{"myCircle", 5}
+	measure(myRect)
+	measure(myCircle)
+}
+
 // time
 func demoTime() {
 	now := time.Now()
@@ -116,6 +170,12 @@ func main() {
 	demoMap()
 
 	demoPointer()
+
+	demoStruct()
+
+	demoMethod()
+
+	demoInterface()
 
 	demoTime()
 
