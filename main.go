@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"go-lab/pkg"
 	"math"
@@ -9,8 +10,8 @@ import (
 
 // import
 func demoImport() {
-	hello_world := pkg.Hello("Bryan")
-	fmt.Println(hello_world)
+	helloWorld := pkg.Hello("Bryan")
+	fmt.Println(helloWorld)
 }
 
 // array
@@ -129,6 +130,32 @@ func demoInterface() {
 	measure(myCircle)
 }
 
+type StatusCode struct {
+	code   int
+	reason string
+}
+
+// error
+func demoError() {
+	statusCodes := []StatusCode{
+		{200, "OK"},
+		{204, "No Content"},
+		{400, "Bad Request"},
+		{403, "Forbidden"},
+		{404, "Not Found"},
+		{500, "Internal Server Error"},
+		{502, "Bad Gateway"},
+		{503, "Service Unavailable"},
+		{504, "Gateway Timeout"},
+	}
+	fmt.Println()
+	for _, st := range statusCodes {
+		if 500 <= st.code && st.code < 600 {
+			fmt.Println(errors.New(fmt.Sprintf("Server Error => status_code: %d, reason: %s", st.code, st.reason)))
+		}
+	}
+}
+
 // time
 func demoTime() {
 	now := time.Now()
@@ -147,12 +174,13 @@ func sum(nums ...int) int {
 func fib(num int) []int {
 	list := []int{}
 	if num <= 0 {
+		fmt.Printf("\nfib(%d) = %+v\n", num, list)
 		return list
 	}
 	last, this := 0, 1
 	for i := 0; i < num; i++ {
-		last, this = this, last+this
 		list = append(list, this)
+		last, this = this, last+this
 	}
 	fmt.Printf("\nfib(%d) = %+v\n", num, list)
 	return list
@@ -176,6 +204,8 @@ func main() {
 	demoMethod()
 
 	demoInterface()
+
+	demoError()
 
 	demoTime()
 
