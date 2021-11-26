@@ -135,11 +135,19 @@ type StatusCode struct {
 	reason string
 }
 
+func fakeRequest(sc StatusCode) (string, error) {
+	if sc.code >= 400 {
+		return sc.reason, errors.New(fmt.Sprintf("Fake Request Error => status_code: %d, reason: %s", sc.code, sc.reason))
+	}
+	return sc.reason, nil
+}
+
 // error
 func demoError() {
 	statusCodes := []StatusCode{
 		{200, "OK"},
 		{204, "No Content"},
+		{302, "Found"},
 		{400, "Bad Request"},
 		{403, "Forbidden"},
 		{404, "Not Found"},
@@ -149,9 +157,11 @@ func demoError() {
 		{504, "Gateway Timeout"},
 	}
 	fmt.Println()
-	for _, st := range statusCodes {
-		if 500 <= st.code && st.code < 600 {
-			fmt.Println(errors.New(fmt.Sprintf("Server Error => status_code: %d, reason: %s", st.code, st.reason)))
+	for _, sc := range statusCodes {
+		if reason, error := fakeRequest(sc); error == nil {
+			fmt.Println(reason)
+		} else {
+			fmt.Println(error)
 		}
 	}
 }
