@@ -12,6 +12,9 @@ func DemoString() {
 	for index, char := range str {
 		fmt.Println(index, ":", char)
 	}
+	fmt.Println(len(str))
+	fmt.Println(str[:3])
+	fmt.Println(str[len(str)-3:])
 }
 
 // array
@@ -44,8 +47,22 @@ func DemoMap() {
 	for k, v := range dict {
 		fmt.Println(k, ":", v)
 	}
+
 	value, exists := dict["D"]
 	fmt.Println(value, exists)
+
+	delete(dict, "A")
+	fmt.Println(dict)
+
+	toUpdate := map[string]int{
+		"D": 13,
+		"E": 14,
+		"F": 15,
+	}
+	for key, value := range toUpdate {
+		dict[key] = value
+	}
+	fmt.Println(dict)
 }
 
 type rect struct {
@@ -62,6 +79,7 @@ func DemoStruct() {
 	pointerMine := &mine
 	fmt.Println(pointerMine)
 	fmt.Println(pointerMine.width, pointerMine.height)
+
 	pointerMine.width, pointerMine.height = 5, 6
 	fmt.Println(pointerMine.width, pointerMine.height)
 }
