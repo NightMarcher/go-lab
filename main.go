@@ -28,6 +28,10 @@ func main() {
 
 	basic.DemoTicker()
 
+	basic.DemoPool()
+
+	basic.DemoWaitGroup()
+
 	algo.Sum(1, 2, 3)
 	array := [5]float32{4, 5, 6}
 	algo.Sum(array[:]...)
